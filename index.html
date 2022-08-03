@@ -1,7 +1,37 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<canvas width="400" height="400">
+		<span id="controls">
+			<div>
+				Canvas size
+				<input
+					id="inputCanvasSize"
+					type="range"
+					min="50"
+					max="1500"
+					step="50"
+					value="400"
+				>
+				<span id="displayCanvasSize">
+					400
+				</span>
+			</div>
+			<div>
+				Number of axes
+				<input
+					id="inputNumAxes"
+					type="range"
+					min="2"
+					max="12"
+					step="1"
+					value="3"
+				>
+				<span id="displayNumAxes">
+					3
+				</span>
+			</div>
+		</span>
+		<canvas width="400" height="400"></canvas>
 		<script src="src/canvas.js"></script>
 	</body>
 </html>

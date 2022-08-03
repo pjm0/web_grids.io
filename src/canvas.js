@@ -4,6 +4,7 @@ let img;
 let buffer;
 let midX;
 let midY;
+let numAxes;
 
 function mod(a, b) {
 	return a - (b * Math.floor(a / b));
@@ -86,6 +87,18 @@ function initGlobals() {
 	midY = canvas.height / 2;
 }
 
+function initInputs() {
+	document.getElementById("inputNumAxes").addEventListener("input", function(e) {
+		numAxes = e.target.value;
+		document.getElementById("displayNumAxes").innerHTML = numAxes;
+	});
+	document.getElementById("inputCanvasSize").addEventListener("input", function(e) {
+		canvas.height = canvas.width = e.target.value;
+		initGlobals();
+		document.getElementById("displayCanvasSize").innerHTML = e.target.value;
+	});
+}
+
 function main() {
 	initGlobals();
 	let rotationAngle = 0;
@@ -94,9 +107,10 @@ function main() {
 	let scaleIncrease = 1.01;
 	let lineWidth = .3;
 	let distortionScaleFactor = .2;
-	let numAxes = 3;
+	numAxes = 3;
 	let targetFPS = 60;
 	let frameDelay = 1000/targetFPS;
+	initInputs();
 	setInterval(function() {
 		drawGrid(rotationAngle, lineWidth, scale, distortionScaleFactor, numAxes);
 		rotationAngle += 2 * Math.PI * rotationSpeed;
