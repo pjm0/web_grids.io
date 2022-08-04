@@ -8,7 +8,7 @@
 					id="inputCanvasSize"
 					type="range"
 					min="50"
-					max="1500"
+					max="3000"
 					step="50"
 					value="400"
 				>
@@ -28,6 +28,70 @@
 				>
 				<span id="displayNumAxes">
 					3
+				</span>
+			</div>
+			<div>
+				Line width
+				<input
+					id="inputLineWidth"
+					type="range"
+					min="0"
+					max="1"
+					step=".01"
+					value=".2"
+				>
+				<span id="displayLineWidth">
+					.2
+				</span>
+			</div>
+			<div>
+				Grid scale (initial)
+				<input
+					id="inputGridScale"
+					type="number"
+					min=".1"
+					max="1000000"
+					step=".1"
+					value="10"
+				>
+
+			</div>
+			<div>
+				Grid scale multiplier
+				<input
+					id="inputGridScaleMultiplier"
+					type="number"
+					min=".5"
+					max="2"
+					step=".00001"
+					value="1.005"
+				>
+			</div>
+			<div>
+				Frames before reset
+				<input
+					id="inputMaxFrames"
+					type="number"
+					min="1"
+					max="10000"
+					step="1"
+					value="1000"
+				>
+			</div>
+			<div>
+				Current Frame
+				<span id="displayCurrentFrame">
+					0
+				</span>
+			</div>
+			<div>
+				Current scale
+				<span id="displayCurrentScale">
+				</span>
+			</div>
+			<div>
+				Current FPS
+				<span id="displayCurrentFPS">
 				</span>
 			</div>
 		</span>
