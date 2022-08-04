@@ -100,7 +100,7 @@ function initInputs() {
 	});
 	document.getElementById("inputLineWidth").addEventListener("input", function(e) {
 		lineWidth = e.target.value;
-		document.getElementById("displayLineWidth").innerHTML = numAxes;
+		document.getElementById("displayLineWidth").innerHTML = lineWidth;
 	});
 	document.getElementById("inputCanvasSize").addEventListener("input", function(e) {
 		canvas.height = canvas.width = e.target.value;
