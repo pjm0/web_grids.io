@@ -34,7 +34,7 @@ function distort(x, y, scale) {
 	return distortFactor;
 }
 
-function drawGrid(rotation, lineWidth, scale, scale2, numAxes) {
+function getGridFn(rotation, lineWidth, scale, scale2, numAxes) {
 	let lineSpacing = 1;
 	let halfLineWidth = lineWidth / 2
 	let canvasSize = Math.min(viewport.width, viewport.height);
@@ -42,10 +42,9 @@ function drawGrid(rotation, lineWidth, scale, scale2, numAxes) {
 	let colors = [0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFF00FFFF, 0xFFFF00FF, 0xFFFFFF00, 0xFF000000];
 	axisAngles = gridAxisAngles(numAxes, rotation);
 
-	for (let i=0; i<viewport.width; i++) {
-		for (let j=0; j<viewport.height; j++) {
-			let x = (i - viewport.midX) / canvasSize;
-			let y = (j - viewport.midY) / canvasSize;
+	return ((x, y) => {
+			x -= 0.5;
+			y -= 0.5;
 			let distortFactor = distort(x, y, scale2);
 			x *= distortFactor;
 			y *= distortFactor;
@@ -59,16 +58,14 @@ function drawGrid(rotation, lineWidth, scale, scale2, numAxes) {
 					remainder > lineSpacing - halfLineWidth) {
 					colorIndex = (colorIndex + axis + 1) % colors.length;
 				}
-				viewport.drawPixel(i, j, colors[colorIndex]);
+				//viewport.drawPixel(i, j, colors[colorIndex]);
 			}
 			if (colorIndex >=0) {
-				viewport.drawPixel(i, j, colors[colorIndex]);
+				return colors[colorIndex];
 			} else {
-				viewport.drawPixel(i, j, 0xFF000000);
+				return 0xFF000000;
 			}
-		}
-	}
-	viewport.updateCanvas();
+	});
 }
 
 function initInputs() {
@@ -117,7 +114,10 @@ function main() {
 	let displayCurrentScale = document.getElementById("displayCurrentScale");
 	let displayCurrentFPS = document.getElementById("displayCurrentFPS");
 	setInterval(function() {
-		drawGrid(rotationAngle, lineWidth, scale, distortionScaleFactor, numAxes);
+		let f = getGridFn(rotationAngle, lineWidth, scale, distortionScaleFactor, numAxes);
+		viewport.plotFunction(f);
+		//viewport.updateCanvas();
+		//drawGrid(rotationAngle, lineWidth, scale, distortionScaleFactor, numAxes);
 		displayCurrentFrame.innerHTML = frameNumber.toString();
 		displayCurrentScale.innerHTML = scale.toString();
 		rotationAngle += 2 * Math.PI * rotationSpeed;

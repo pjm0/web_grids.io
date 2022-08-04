@@ -6,7 +6,7 @@ class Viewport {
     }
 
     initBuffer() {
-        this.img = this.context.createImageData(this.canvas.width, this.canvas.height);
+        this.img = this.context.createImageData(this.width, this.height);
         this.buffer = new Uint32Array(this.img.data.buffer);
     }
 
@@ -14,11 +14,11 @@ class Viewport {
         this.buffer[x + y * this.width] = color;
     }
 
-    plotFunction(f, x, y) {
+    plotFunction(f) {
         for (let i=0; i<this.width; i++) {
             for (let j=0; j<this.height; j++) {
                 let color = f(i/this.width, j/this.height);
-                this.drawPixel(color);
+                this.drawPixel(i, j, color);
             }
         }
         this.updateCanvas();
