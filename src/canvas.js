@@ -1,9 +1,4 @@
-let canvas;
-let context;
-let img;
-let buffer;
-let midX;
-let midY;
+let viewport;
 let numAxes;
 let lineWidth;
 let frameNumber;
@@ -34,14 +29,6 @@ function gridCoords(x, y, axisAngles, scale) {
 	return coords;	
 }
 
-function drawPixel(x, y, color) {
-	buffer[x + y * canvas.width] = color;
-}
-
-function updateCanvas() {
-	context.putImageData(img, 0, 0);
-}
-
 function distort(x, y, scale) {
 	let distortFactor = Math.sqrt(Math.abs(1 - (x*x + y*y)/scale));
 	return distortFactor;
@@ -50,15 +37,15 @@ function distort(x, y, scale) {
 function drawGrid(rotation, lineWidth, scale, scale2, numAxes) {
 	let lineSpacing = 1;
 	let halfLineWidth = lineWidth / 2
-	let canvasSize = Math.min(canvas.width, canvas.height);
+	let canvasSize = Math.min(viewport.width, viewport.height);
 
 	let colors = [0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFF00FFFF, 0xFFFF00FF, 0xFFFFFF00, 0xFF000000];
 	axisAngles = gridAxisAngles(numAxes, rotation);
 
-	for (let i=0; i<canvas.width; i++) {
-		for (let j=0; j<canvas.height; j++) {
-			let x = (i - midX) / canvasSize;
-			let y = (j - midY) / canvasSize;
+	for (let i=0; i<viewport.width; i++) {
+		for (let j=0; j<viewport.height; j++) {
+			let x = (i - viewport.midX) / canvasSize;
+			let y = (j - viewport.midY) / canvasSize;
 			let distortFactor = distort(x, y, scale2);
 			x *= distortFactor;
 			y *= distortFactor;
@@ -72,25 +59,16 @@ function drawGrid(rotation, lineWidth, scale, scale2, numAxes) {
 					remainder > lineSpacing - halfLineWidth) {
 					colorIndex = (colorIndex + axis + 1) % colors.length;
 				}
-				drawPixel(i, j, colors[colorIndex]);
+				viewport.drawPixel(i, j, colors[colorIndex]);
 			}
 			if (colorIndex >=0) {
-				drawPixel(i, j, colors[colorIndex]);
+				viewport.drawPixel(i, j, colors[colorIndex]);
 			} else {
-				drawPixel(i, j, 0xFF000000);
+				viewport.drawPixel(i, j, 0xFF000000);
 			}
 		}
 	}
-	updateCanvas();
-}
-
-function initCanvasGlobals() {
-	canvas = document.querySelector("canvas");
-	context = canvas.getContext("2d");
-	img = context.createImageData(canvas.width, canvas.height);
-	buffer = new Uint32Array(img.data.buffer);
-	midX = canvas.width / 2;
-	midY = canvas.height / 2;
+	viewport.updateCanvas();
 }
 
 function initInputs() {
@@ -103,8 +81,8 @@ function initInputs() {
 		document.getElementById("displayLineWidth").innerHTML = lineWidth;
 	});
 	document.getElementById("inputCanvasSize").addEventListener("input", function(e) {
-		canvas.height = canvas.width = e.target.value;
-		initCanvasGlobals();
+		document.getElementById("displayCanvasSize").innerHTML = e.target.value;
+		viewport.resize(e.target.value, e.target.value);
 	});
 	document.getElementById("inputGridScale").addEventListener("input", function(e) {
 		scale = initialScale = e.target.value;
@@ -119,7 +97,7 @@ function initInputs() {
 }
 
 function main() {
-	initCanvasGlobals();
+	viewport = new Viewport(document.querySelector("canvas"));
 	let initialRotationAngle = 0;
 	let rotationAngle = initialRotationAngle;
 	let rotationSpeed = 0.001;
