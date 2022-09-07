@@ -23,7 +23,7 @@ function main() {
         gridState.maxFrameNumber = e.target.valueAsNumber;
     });
 	setInterval(function() {
-		viewport.plotFunction(gridState.grid.bind(gridState));
+		viewport.asyncPlot(gridState.grid.bind(gridState), 20);
 		gridState.incrementFrame();
 	}, gridState.frameDelay);
 
