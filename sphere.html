@@ -21,27 +21,13 @@
 				<input
 					id="inputNumAxes"
 					type="range"
-					min="2"
-					max="12"
+					min="1"
+					max="18"
 					step="1"
 					value="3"
 				>
 				<span id="displayNumAxes">
 					3
-				</span>
-			</div>
-			<div>
-				Line width
-				<input
-					id="inputLineWidth"
-					type="range"
-					min="0"
-					max="1"
-					step=".01"
-					value=".2"
-				>
-				<span id="displayLineWidth">
-					.2
 				</span>
 			</div>
 			<div>
@@ -52,7 +38,7 @@
 					min=".1"
 					max="1000000"
 					step=".1"
-					value="10"
+					value="200"
 				>
 
 			</div>
@@ -64,8 +50,36 @@
 					min=".5"
 					max="2"
 					step=".00001"
-					value="1.005"
+					value="1"
 				>
+			</div>
+						<div>
+				Minimum brightness
+				<input
+					id="inputMinBrightness"
+					type="range"
+					min="0"
+					max="1"
+					step=".01"
+					value="0.2"
+				>
+				<span id="displayMinBrightness">
+					0.2
+				</span>
+			</div>
+						<div>
+				Maximum brightness
+				<input
+					id="inputMaxBrightness"
+					type="range"
+					min="0"
+					max="1"
+					step=".01"
+					value="1"
+				>
+				<span id="displayMaxBrightness">
+					1
+				</span>
 			</div>
 			<div>
 				Frames before reset
@@ -96,6 +110,8 @@
 			</div>
 		</span>
 		<canvas width="400" height="400"></canvas>
+		<!-- <img id="moon" src="img/earth.jpg"> -->
+		<canvas id="texture" width="1024" height="512"></canvas>
 		<script src="src/viewport.js"></script>
 		<script src="src/gridstate.js"></script>
 		<script src="src/interpolate.js"></script>

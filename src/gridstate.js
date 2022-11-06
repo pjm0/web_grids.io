@@ -5,12 +5,22 @@ function remainderDivide(a, b) {
     return [q, r];
 }
 
-function cellCoordsToRGB(cellCoords) {
-    let color = 0xFF000000;
-    for (let i = 0; i<3; i++) {
-        color += ((cellCoords[i]*127 + 128) % 256) << (8 * (2-i));
+function colorAverage(colors) {
+    let result = [0, 0, 0];
+    let maxValue = 0;
+    if (colors.length > 0) {
+        for (let component = 0; component<3; component++) {
+            for (let colorIndex = 0; colorIndex<colors.length; colorIndex++) {
+                result[component] += colors[colorIndex][component];
+            }
+            result[component] = Math.min(1, result[component]);
+            maxValue = Math.max(maxValue, result[component]);
+        }
+        for (let component = 0; component<3; component++) {
+            result[component] /= maxValue;
+        }
     }
-    return color;
+    return result;
 }
 
 class GridState {
@@ -18,7 +28,7 @@ class GridState {
         //this.gci = new GridControlInterface();
         this.numAxes = document.getElementById("inputNumAxes").valueAsNumber;
         this.updateGridAxisAngles();
-        this.lineWidth = document.getElementById("inputLineWidth").valueAsNumber;
+        // this.lineWidth = document.getElementById("inputLineWidth").valueAsNumber;
         this.frameNumber = 0;
         this.maxFrameNumber = document.getElementById("inputMaxFrames").valueAsNumber;
         this.initialScale = document.getElementById("inputGridScale").valueAsNumber;
@@ -26,16 +36,13 @@ class GridState {
         this.scaleIncrease = document.getElementById("inputGridScaleMultiplier").valueAsNumber; 
         this.initialRotationAngle = 0;
         this.rotationAngle = this.initialRotationAngle;
-        this.rotationSpeed = 0.001;
+        this.rotationSpeed = Math.PI/3600;
         this.distortionScaleFactor = .2;
         this.targetFPS = 60;
         this.frameDelay = 1000 / this.targetFPS;
         this.lastTimeStamp = NaN;
         this.canvasSize = Math.min(viewport.width, viewport.height);
-        this.colors = [0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFF00FFFF, 0xFFFF00FF, 0xFFFFFF00, 0xFF000000];
-
-
-
+        this.colors = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
     }
 
     incrementFrame() {
@@ -65,7 +72,7 @@ class GridState {
         }
     }
 
-    grid(x, y) { 
+    grid(x, y, color) { 
 
         x -= 0.5;
         y -= 0.5;
@@ -79,7 +86,8 @@ class GridState {
         //console.log(coords, this.axisAngles);
         let colorIndex = -1;
         let cellIndex = 0;
-        let cellCoords = [];
+        //let cellCoords = [];
+        let colors = [];
 
         for (let axis=0; axis<this.numAxes; axis++) {
             let n = coords[axis];
@@ -88,20 +96,25 @@ class GridState {
             let divisionResults = remainderDivide(n, 1);
             quotient = divisionResults[0];
             remainder = divisionResults[1];
-            cellCoords.push(quotient);
+            //cellCoords.push(quotient);
             //console.log(divisionResults, this.lineSpacing, this.lineWidth);
-            if (remainder < this.lineWidth / 2 ||
-                remainder > 1 - this.lineWidth / 2) {
-                colorIndex = (colorIndex + axis + 1) % this.colors.length;
+            let lineWidth = 1-color[axis % this.colors.length];
+            if (remainder < lineWidth / 2 ||
+                remainder > 1 - lineWidth / 2) {
+                //colors.push([0, 0, 0]);
+                //colorIndex = (colorIndex + axis + 1) % this.colors.length;
             } else {
-                cellIndex += Math.abs(quotient);
+                colors.push(this.colors[axis % this.colors.length]);
+                //cellIndex += Math.abs(quotient);
             }
         }
-        if (colorIndex >=0) {
-            return this.colors[colorIndex];
-        } else {
-            return cellCoordsToRGB(cellCoords);
-            //return this.colors[0];
-        }
+        //console.log(colors, colorAverage(colors));
+        return colorAverage(colors);
+        // if (colorIndex >=0) {
+        //     return [0, 0, 0];
+        // } else {
+        //     return [1, 1, 1];//cellCoordsToRGB(cellCoords);
+        //     //return this.colors[0];
+        // }
     }
 }
