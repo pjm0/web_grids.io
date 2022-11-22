@@ -38,7 +38,7 @@ class GridState {
         this.rotationAngle = this.initialRotationAngle;
         this.rotationSpeed = Math.PI/3600;
         this.distortionScaleFactor = .2;
-        this.targetFPS = 60;
+        this.targetFPS = 0.2;
         this.frameDelay = 1000 / this.targetFPS;
         this.lastTimeStamp = NaN;
         this.canvasSize = Math.min(viewport.width, viewport.height);
