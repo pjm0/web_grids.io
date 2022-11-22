@@ -6,23 +6,23 @@ function main() {
 
 	viewport = new Viewport(document.querySelector("canvas"));
 	gridState = new GridState(viewport);
-    let minBrightness = document.getElementById("inputMinBrightness").valueAsNumber;
-	let maxBrightness = document.getElementById("inputMaxBrightness").valueAsNumber;
-	let focalLength = document.getElementById("inputFocalLength").valueAsNumber;
-	let cameraDistance = document.getElementById("inputCameraDistance").valueAsNumber;
-	let camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
-	let sphere = new Sphere();
-	let testRay = camera.ray(0, 0);
-	console.log("testRay, sphere.intercept(testRay)", testRay, sphere.intercept(testRay));
-	camera2 = new Camera([0, 0, -10], [0, 0, 0], [0, 0], 5);
-	let sphere2 = new Sphere();
-	let testRay2 = camera2.ray(0, 0);
-	var c = document.getElementById("texture");
+    // let minBrightness = document.getElementById("inputMinBrightness").valueAsNumber;
+	// let maxBrightness = document.getElementById("inputMaxBrightness").valueAsNumber;
+	// let focalLength = document.getElementById("inputFocalLength").valueAsNumber;
+	// let cameraDistance = document.getElementById("inputCameraDistance").valueAsNumber;
+	// let camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
+	// let sphere = new Sphere();
+	// let testRay = camera.ray(0, 0);
+	// console.log("testRay, sphere.intercept(testRay)", testRay, sphere.intercept(testRay));
+	// camera2 = new Camera([0, 0, -10], [0, 0, 0], [0, 0], 5);
+	// let sphere2 = new Sphere();
+	// let testRay2 = camera2.ray(0, 0);
+	const c = document.getElementById("texture");
 	c.style.display = "none";
 	console.log(c);
-	var ctx = c.getContext("2d");
+	const ctx = c.getContext("2d");
 	ctx.willReadFrequently = true;
-	var image = new Image();
+	const image = new Image();
 	image.style.display = "none";
 	// image.src = "img/jup0vss1.jpg";
 	//image.src = "img/Map_of_the_full_sun.jpg";
@@ -49,43 +49,43 @@ function main() {
 		console.log("testRay2, sphere2.intercept(testRay)", testRay2, sphere.intercept(testRay2));
 	}
 	// console.log(textureMap(ctx, 0.5, 0.5));
-	document.getElementById("inputNumAxes").addEventListener("input", function(e) {
-        gridState.numAxes = e.target.valueAsNumber;
-        document.getElementById("displayNumAxes").innerHTML = gridState.numAxes;
-    });
+	// document.getElementById("inputNumAxes").addEventListener("input", function(e) {
+    //     gridState.numAxes = e.target.valueAsNumber;
+    //     document.getElementById("displayNumAxes").innerHTML = gridState.numAxes;
+    // });
     document.getElementById("inputCanvasSize").addEventListener("input", function(e) {
         document.getElementById("displayCanvasSize").innerHTML = e.target.valueAsNumber;
         viewport.resize(e.target.valueAsNumber, e.target.valueAsNumber);
     });
-    document.getElementById("inputGridScale").addEventListener("input", function(e) {
-        gridState.scale = gridState.initialScale = e.target.valueAsNumber;
-    });
-    document.getElementById("inputGridScaleMultiplier").addEventListener("input", function(e) {
-        gridState.scaleIncrease = e.target.valueAsNumber;
-    });
-    document.getElementById("inputMaxFrames").addEventListener("input", function(e) {
-        gridState.maxFrameNumber = e.target.valueAsNumber;
-    });
-    document.getElementById("inputMinBrightness").addEventListener("input", function(e) {
-        minBrightness = e.target.valueAsNumber;
-        document.getElementById("displayMinBrightness").innerHTML = minBrightness;
-    });
-    document.getElementById("inputMaxBrightness").addEventListener("input", function(e) {
-        maxBrightness = e.target.valueAsNumber;
-        document.getElementById("displayMaxBrightness").innerHTML = maxBrightness;
-    });
+    // document.getElementById("inputGridScale").addEventListener("input", function(e) {
+    //     gridState.scale = gridState.initialScale = e.target.valueAsNumber;
+    // });
+    // document.getElementById("inputGridScaleMultiplier").addEventListener("input", function(e) {
+    //     gridState.scaleIncrease = e.target.valueAsNumber;
+    // });
+    // document.getElementById("inputMaxFrames").addEventListener("input", function(e) {
+    //     gridState.maxFrameNumber = e.target.valueAsNumber;
+    // });
+    // document.getElementById("inputMinBrightness").addEventListener("input", function(e) {
+    //     minBrightness = e.target.valueAsNumber;
+    //     document.getElementById("displayMinBrightness").innerHTML = minBrightness;
+    // });
+    // document.getElementById("inputMaxBrightness").addEventListener("input", function(e) {
+    //     maxBrightness = e.target.valueAsNumber;
+    //     document.getElementById("displayMaxBrightness").innerHTML = maxBrightness;
+    // });
 
-    document.getElementById("inputFocalLength").addEventListener("input", function(e) {
-        focalLength = e.target.valueAsNumber;
-        document.getElementById("displayFocalLength").innerHTML = focalLength;
-        camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
-    });
+    // document.getElementById("inputFocalLength").addEventListener("input", function(e) {
+    //     focalLength = e.target.valueAsNumber;
+    //     document.getElementById("displayFocalLength").innerHTML = focalLength;
+    //     camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
+    // });
 
-    document.getElementById("inputCameraDistance").addEventListener("input", function(e) {
-        cameraDistance = e.target.valueAsNumber;
-        document.getElementById("displayCameraDistance").innerHTML = cameraDistance;
-        camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
-    });
+    // document.getElementById("inputCameraDistance").addEventListener("input", function(e) {
+    //     cameraDistance = e.target.valueAsNumber;
+    //     document.getElementById("displayCameraDistance").innerHTML = cameraDistance;
+    //     camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
+    // });
     document.getElementById("greyscaleActive").addEventListener("input", function(e) {
         greyscaleEnabled = true; 
 		testTexMap = false;
@@ -125,7 +125,7 @@ function main() {
 		//azimuth += dAzimuth;
 		//inclination += dInclination;
 		let lightDirection = directionVector(azimuth, inclination);
-		textureXShift += .001;
+		textureXShift -= .001;
 		if (textureXShift>1) textureXShift -= 1;
 		viewport.plotFunctionRGB((x, y)=>{
 			let normal = sphereNormal(x, y);
