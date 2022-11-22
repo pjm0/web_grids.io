@@ -9,7 +9,7 @@
 					id="inputCanvasSize"
 					type="range"
 					min="8"
-					max="1024"
+					max="2000"
 					step="1"
 					value="400"
 				>
@@ -17,6 +17,32 @@
 					400
 				</span>
 			</div>
+ 			<div>
+				Grid Divisions (x)
+				<input
+					id="inputGridDivisionsX"
+					type="range"
+					min="1"
+					max="360"
+					step="1"
+					value="90"
+				>
+				<span id="displayGridDivisionsX">
+					90
+				</span>
+ 			<div>
+				Grid Divisions (y)
+				<input
+					id="inputGridDivisionsY"
+					type="range"
+					min="1"
+					max="360"
+					step="1"
+					value="45"
+				>
+				<span id="displayGridDivisionsY">
+					45
+				</span>
 <!-- 			<div>
 				Focal Length
 				<input
@@ -137,24 +163,24 @@
 				<span id="displayCurrentFPS">
 				</span>
 			</div>
-			 <div>
+<!-- 			 <div>
 			 	  <p></p>
 				 <input type="radio" id="grid" name="display_type" value="HTML">
 				 <label for="grid">Grid</label><br>
 				 <input type="radio" id="surface" name="display_type" value="CSS">
 				 <label for="surface">Surface</label><br>
-			 </div>
-			 <input type="radio" class="btn-check" name="options" id="greyscaleActive" autocomplete="off" checked>
+			 </div> -->
+<!-- 			 <input type="radio" class="btn-check" name="options" id="greyscaleActive" autocomplete="off" >
 				<label class="btn btn-secondary" for="greyscaleActive">Greyscale</label>
 
 				<input type="radio" class="btn-check" name="options" id="testTexMap" autocomplete="off">
 				<label class="btn btn-secondary" for="testTexMap">Texture map color test</label>
-
-				<input type="radio" class="btn-check" name="options" id="texMap" autocomplete="off" >
+ -->
+				<input type="radio" class="btn-check" name="options" id="texMap" autocomplete="off" checked>
 				<label class="btn btn-secondary" for="texMap">Texture map</label>
-
+<!-- 
 				<input type="radio" class="btn-check" name="options" id="grid" autocomplete="off">
-				<label class="btn btn-secondary" for="Grid">Grid</label>
+				<label class="btn btn-secondary" for="Grid">Grid</label> -->
 		</span>
 		<!-- <img id="moon" src="img/earth.jpg"> -->
 		<canvas id="texture" width="1024" height="512" display="none"></canvas>

@@ -31,7 +31,17 @@ function main() {
 
 	document.querySelector('body').appendChild(image);
 	let imageData;// = loadImage(url);
+	let greyscaleEnabled = false;
+	let testTexMap = false;
+	let texMapEnabled = true;
+	let viewAsGrid = false;
+	let gridDivisionsX;
+	let gridDivisionsY;
+
 	image.onload = function () {
+		gridDivisionsX = document.getElementById("inputGridDivisionsX").valueAsNumber;
+		gridDivisionsY = document.getElementById("inputGridDivisionsY").valueAsNumber;
+
 		c.height = image.height;
 		c.width = image.width;
 		console.log(image.height, image.width, c.height, c.width);
@@ -41,22 +51,33 @@ function main() {
 		console.log(imageData);
 	    console.log("imageData[0], imageData[1], imageData[2]", imageData[0], imageData[1], imageData[2]);
 	    console.log("textureMap(imageData, c.width, c.height, 0, 0)", textureMapFloat (imageData, c.width, c.height, 0, 0));
-		let greyscaleEnabled = true;
-		let testTexMap = false;
-		let texMapEnabled = false;
-		let viewAsGrid = false;
 
-		console.log("testRay2, sphere2.intercept(testRay)", testRay2, sphere.intercept(testRay2));
 	}
 	// console.log(textureMap(ctx, 0.5, 0.5));
 	// document.getElementById("inputNumAxes").addEventListener("input", function(e) {
     //     gridState.numAxes = e.target.valueAsNumber;
     //     document.getElementById("displayNumAxes").innerHTML = gridState.numAxes;
     // });
-    document.getElementById("inputCanvasSize").addEventListener("input", function(e) {
+    document.getElementById("inputCanvasSize").addEventListener("input", (e)=>{
         document.getElementById("displayCanvasSize").innerHTML = e.target.valueAsNumber;
         viewport.resize(e.target.valueAsNumber, e.target.valueAsNumber);
     });
+    document.getElementById("inputGridDivisionsX").addEventListener("onload", (e)=>{
+    	gridDivisionsX = e.target.valueAsNumber;
+    });
+    document.getElementById("inputGridDivisionsX").addEventListener("input", (e)=>{
+        gridDivisionsX = e.target.valueAsNumber;
+    document.getElementById("displayGridDivisionsX").innerHTML = gridDivisionsX;
+    });
+
+    document.getElementById("inputGridDivisionsY").addEventListener("onload", (e)=>{
+    	gridDivisionsY = e.target.valueAsNumber;
+    });
+    document.getElementById("inputGridDivisionsY").addEventListener("input", (e)=>{
+        gridDivisionsY = e.target.valueAsNumber;
+    document.getElementById("displayGridDivisionsY").innerHTML = gridDivisionsY;
+    });
+
     // document.getElementById("inputGridScale").addEventListener("input", function(e) {
     //     gridState.scale = gridState.initialScale = e.target.valueAsNumber;
     // });
@@ -86,31 +107,31 @@ function main() {
     //     document.getElementById("displayCameraDistance").innerHTML = cameraDistance;
     //     camera = new Camera([0, 0, cameraDistance], [0, 0, 0], [0, 0], focalLength);
     // });
-    document.getElementById("greyscaleActive").addEventListener("input", function(e) {
-        greyscaleEnabled = true; 
-		testTexMap = false;
-		texMapEnabled = false;
-		viewAsGrid = false;
-    })
-    document.getElementById("testTexMap").addEventListener("input", function(e) {
-        greyscaleEnabled = false; 
-		testTexMap = true;
-		texMapEnabled = false;
-		viewAsGrid = false;    });
+    // document.getElementById("greyscaleActive").addEventListener("input", function(e) {
+    //     greyscaleEnabled = true; 
+	// 	testTexMap = false;
+	// 	texMapEnabled = false;
+	// 	viewAsGrid = false;
+    // })
+    // document.getElementById("testTexMap").addEventListener("input", function(e) {
+    //     greyscaleEnabled = false; 
+	// 	testTexMap = true;
+	// 	texMapEnabled = false;
+	// 	viewAsGrid = false;    });
         
-    document.getElementById("texMap").addEventListener("input", function(e) {
-        greyscaleEnabled = false; 
-		testTexMap = false;
-		texMapEnabled = true;
-		viewAsGrid = false;
-    });
+    // document.getElementById("texMap").addEventListener("input", function(e) {
+    //     greyscaleEnabled = false; 
+	// 	testTexMap = false;
+	// 	texMapEnabled = true;
+	// 	viewAsGrid = false;
+    // });
         
-    document.getElementById("grid").addEventListener("input", function(e) {
-        greyscaleEnabled = false; 
-		testTexMap = false;
-		texMapEnabled = true;
-		viewAsGrid = true;
-    });
+    // document.getElementById("grid").addEventListener("input", function(e) {
+    //     greyscaleEnabled = false; 
+	// 	testTexMap = false;
+	// 	texMapEnabled = true;
+	// 	viewAsGrid = true;
+    // });
         
 
 	let azimuth = 0;
@@ -118,7 +139,7 @@ function main() {
 	let dAzimuth = 0.125*Math.PI//(Math.random() - 0.5) * Math.PI / 36;
 	let dInclination = 0.125*Math.PI//(Math.random() - 0.5) * Math.PI / 36;
 
-	const texMapEnabled =  true;
+	// const texMapEnabled =  true;
 	let textureXShift = .6;
 	let textureYShift = 0;
 	setInterval(function() {
@@ -158,11 +179,10 @@ function main() {
 				} else {
 					texMapColor = [255, 0, 255];
 				}
-				let m = 100;
-				let n = 100;
-				let axisFns = [getAxisFn(m, n, 2),
-							   getAxisFn(m, -n, 1),
-							   getAxisFn(m, n/2, 0)];
+
+				let axisFns = [getAxisFn(gridDivisionsX, gridDivisionsY, 2),
+							   getAxisFn(gridDivisionsX, -gridDivisionsY, 1),
+							   getAxisFn(gridDivisionsX, gridDivisionsY/2, 0)];
 				let colors = axisFns.map((f)=>{
 					return f(textureX, textureY, texMapColor);
 				});
@@ -229,8 +249,8 @@ function main() {
 	// 			return [255, 0, 255];
 	// 		}
 	// 	});
-		gridState.incrementFrame();
-	}, gridState.frameDelay);
+		//gridState.incrementFrame();
+	}, 1000/30);
 
 	// console.log(camera, camera.imgCoords(0, 0));
 	// let testObject = new Sphere();
