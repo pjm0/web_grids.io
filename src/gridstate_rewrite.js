@@ -18,12 +18,12 @@ function colorAverage(colors) {
                 result[component] += colors[colorIndex][component];
             }
             // result[component] = Math.min(1, result[component]);
-            // maxValue = Math.max(maxValue, result[component]);
+            maxValue = Math.max(maxValue, result[component]);
         }
-        for (let component = 0; component<3; component++) {
-            // result[component] /= maxValue;
-            // result[component] /= colors.length;
-        }
+        // for (let component = 0; component<3; component++) {
+        //     result[component] /= maxValue;
+        //     //result[component] /= colors.length;
+        // }
     }
     return result;
 }

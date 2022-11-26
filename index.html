@@ -1,20 +1,91 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<canvas width="400" height="400"></canvas>
+		<div>
+			Canvas size
+			<input
+				id="inputCanvasSize"
+				type="range"
+				min="10"
+				max="2000"
+				step="10"
+				value="200"
+			>
+			<span id="displayCanvasSize">
+				200
+			</span>
+		</div>
+		<canvas width="200" height="200"></canvas>
 		<span id="controls">
+
 			<div>
-				Canvas size
+				Zoom target X
 				<input
-					id="inputCanvasSize"
+					id="inputZoomTargetX"
 					type="range"
-					min="8"
-					max="2000"
-					step="1"
-					value="400"
+					min="-0.5"
+					max="0.5"
+					step=".001"
+					value="0"
 				>
-				<span id="displayCanvasSize">
-					400
+				<span id="displayZoomTargetX">
+					0
+				</span>
+			</div>
+			<div>
+				Zoom target Y
+				<input
+					id="inputZoomTargetY"
+					type="range"
+					min="-0.5"
+					max="0.5"
+					step=".001"
+					value="0"
+				>
+				<span id="displayZoomTargetY">
+					0
+				</span>
+			</div>
+			<div>
+				Zoom Level
+				<input
+					id="inputZoom"
+					type="range"
+					min="-10"
+					max="10"
+					step=".1"
+					value="0"
+				>
+				<span id="displayZoom">
+					1
+				</span>
+			</div>
+			<div>
+				Subdivision base
+				<input
+					id="inputExpBase"
+					type="range"
+					min="1.5"
+					max="60"
+					step=".5"
+					value="2"
+				>
+				<span id="displayExpBase">
+					2
+				</span>
+			</div>
+			<div>
+				Subdivision exponent
+				<input
+					id="inputExp"
+					type="range"
+					min="0"
+					max="10"
+					step="1"
+					value="0"
+				>
+				<span id="displayExp">
+					2
 				</span>
 			</div>
  			<div>
@@ -23,7 +94,7 @@
 					id="inputGridDivisionsX"
 					type="range"
 					min="1"
-					max="360"
+					max="30"
 					step="1"
 					value="90"
 				>
@@ -36,13 +107,14 @@
 					id="inputGridDivisionsY"
 					type="range"
 					min="1"
-					max="360"
+					max="30"
 					step="1"
 					value="45"
 				>
 				<span id="displayGridDivisionsY">
 					45
 				</span>
+			</div>
 <!-- 			<div>
 				Focal Length
 				<input
@@ -93,7 +165,7 @@
 					min=".1"
 					max="1000000"
 					step=".1"
-					value="400"
+					value="100"
 				>
 
 			</div>
@@ -176,8 +248,8 @@
 				<input type="radio" class="btn-check" name="options" id="testTexMap" autocomplete="off">
 				<label class="btn btn-secondary" for="testTexMap">Texture map color test</label>
  -->
-				<input type="radio" class="btn-check" name="options" id="texMap" autocomplete="off" checked>
-				<label class="btn btn-secondary" for="texMap">Texture map</label>
+<!-- 				<input type="radio" class="btn-check" name="options" id="texMap" autocomplete="off" display="none" checked>
+				<label class="btn btn-secondary" for="texMap" display="none">Texture map</label> -->
 <!-- 
 				<input type="radio" class="btn-check" name="options" id="grid" autocomplete="off">
 				<label class="btn btn-secondary" for="Grid">Grid</label> -->
